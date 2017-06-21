@@ -3,14 +3,14 @@
 ###############################################################################
 
 RELEASE=0.1
-VERSION=0.1.0
+VERSION=1.0.0
 LANG1=kaz
 BASENAME=apertium-$(LANG1)
 
 TARGETS_COMMON = $(LANG1).automorf.hfst $(LANG1).autogen.hfst \
-	$(LANG1).automorf.bin $(LANG1).autogen.bin $(LANG1).autopgen.bin \
+	$(LANG1).automorf.bin $(LANG1).autogen.bin \
 	$(LANG1).automorf.att.gz $(LANG1).autogen.att.gz \
-        $(LANG1).rlx.bin $(LANG1).prob
+        $(LANG1).rlx.bin #$(LANG1).prob
 
 # This include defines goals for install-modes, .deps/.d and .mode files:
 @ap_include@
@@ -60,8 +60,6 @@ $(LANG1).automorf.bin: $(LANG1).automorf.att.gz .deps/.d
 	zcat < $< > .deps/$(LANG1).automorf.att
 	lt-comp lr .deps/$(LANG1).automorf.att $@
 
-$(LANG1).autopgen.bin: $(BASENAME).post-$(LANG1).dix
-	lt-comp lr $< $@
 
 
 
@@ -91,8 +89,8 @@ $(LANG1).rlx.bin: $(BASENAME).$(LANG1).rlx $(CGCOMP)
 ## Unigram tagger 
 ###############################################################################
 
-$(LANG1).prob: corpus/$(LANG1).tagged
-	apertium-tagger -s 0 -u 2 $@ $<
+#$(LANG1).prob: corpus/$(LANG1).tagged
+#	apertium-tagger -s 0 -u 2 $@ $<
 
 ###############################################################################
 ## Spell checker
